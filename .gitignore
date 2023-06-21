@@ -1,0 +1,12 @@
+.pio/
+.pioenvs/
+.piolibdeps/
+include/config.h
+
+# Agent-specific files (AGENTS.md is the canonical, shared spec)
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
