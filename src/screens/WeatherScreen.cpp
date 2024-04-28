@@ -43,8 +43,8 @@ void WeatherScreen::refresh() {
 
   // Bake current local time and short date into the cached temperature line.
   // There is no periodic redraw, so the clock only advances on the next refetch.
-  unsigned long epoch = timeClient_.getEpochTime();
-  struct tm *t = gmtime((time_t*)&epoch);
+  time_t epoch = timeClient_.getEpochTime();
+  struct tm *t = gmtime(&epoch);
   char suffix[13];
   snprintf(suffix, sizeof(suffix), " %02d:%02d %02d/%02d",
            timeClient_.getHours(), timeClient_.getMinutes(),
