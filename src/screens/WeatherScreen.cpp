@@ -13,6 +13,7 @@ unsigned long WeatherScreen::intervalMs() const {
 }
 
 void WeatherScreen::refresh() {
+  Serial.println("[APP] weather GET " CFG_URL_WEATHER);
   hclient_.begin(wclient_, CFG_URL_WEATHER);
   // wttr.in returns the HTML browser page for browser-like UAs. A curl-style
   // UA is required to get the plain-text format response.
@@ -28,6 +29,7 @@ void WeatherScreen::refresh() {
 
   String body = hclient_.getString();
   hclient_.end();
+  Serial.println("[APP] weather raw: " + body);
 
   // HD44780 can't render the UTF-8 degree sign (0xC2 0xB0). Strip it.
   body.replace("\xC2\xB0", "");
