@@ -27,7 +27,7 @@
   #define CFG_BUTTON_PIN           D7
 #endif
 #ifndef CFG_WEATHER_LOCATION
-  #define CFG_WEATHER_LOCATION     Kichevo
+  #define CFG_WEATHER_LOCATION     Skopje
 #endif
 #ifndef CFG_CURRENCY_BASE
   #define CFG_CURRENCY_BASE        USD

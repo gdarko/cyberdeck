@@ -10,7 +10,7 @@
 
 // City for wttr.in. Bare token, NOT a string. Single word; for multi-word
 // cities use the wttr.in URL form (e.g. `New_York`).
-#define CFG_WEATHER_LOCATION  Kichevo
+#define CFG_WEATHER_LOCATION  Skopje
 
 // Currency pair fetched from Revolut's public quote API. Bare 3-letter tokens.
 // Combined into the URL as `<BASE><QUOTE>` (e.g. `USDEUR`) and into the LCD
