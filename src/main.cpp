@@ -49,6 +49,11 @@ void setup(){
   WiFi_Setup();
   wifiClient.setInsecure();
   wifiClient.setBufferSizes(2048, 512);
+
+  // Reuse TCP/TLS across refreshes to skip the BearSSL handshake.
+  httpClient.setReuse(true);
+  httpClient.setTimeout(8000);
+
   NTP_Setup(timeClient);
 }
 
