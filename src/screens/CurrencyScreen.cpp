@@ -22,18 +22,18 @@ FetchResult fetchRate(HTTPClient &hclient, WiFiClientSecure &wclient) {
     return r;
   }
 
-  String body = hclient.getString();
-  hclient.end();
+  StaticJsonDocument<32> filter;
+  filter["rate"] = true;
 
   StaticJsonDocument<128> doc;
-  DeserializationError err = deserializeJson(doc, body);
+  DeserializationError err = deserializeJson(doc, hclient.getStream(),
+                                             DeserializationOption::Filter(filter));
+  hclient.end();
   if (err) {
     r.isError = true;
     r.error   = err.f_str();
     Serial.print("[APP] JSON parse error: ");
     Serial.println(err.c_str());
-    Serial.print("[APP] body: ");
-    Serial.println(body);
     return r;
   }
 
