@@ -102,10 +102,15 @@ void WiFi_Setup() {
     ESP.restart();
   } else {
     Serial.println("[WiFi] Connected.");
-    Serial.println("[WiFi] SSID:    " + WiFi.SSID());
-    Serial.println("[WiFi] Channel: " + String(WiFi.channel()));
-    Serial.println("[WiFi] RSSI:    " + String(WiFi.RSSI()) + " dBm");
-    Serial.println("[WiFi] IP:      " + WiFi.localIP().toString());
+    Serial.print("[WiFi] SSID:    ");
+    Serial.println(WiFi.SSID());
+    Serial.print("[WiFi] Channel: ");
+    Serial.println(WiFi.channel());
+    Serial.print("[WiFi] RSSI:    ");
+    Serial.print(WiFi.RSSI());
+    Serial.println(" dBm");
+    Serial.print("[WiFi] IP:      ");
+    Serial.println(WiFi.localIP());
   }
 }
 

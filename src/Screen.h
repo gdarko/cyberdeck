@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
 #include "Display.h"
+#include "config_defaults.h"
 
 // Abstract base for an LCD screen. Subclasses implement refresh() (which
 // updates l1_ and l2_) and intervalMs(). The base's tick() runs the gating
@@ -29,7 +30,10 @@ public:
   }
 
 protected:
-  Screen(LiquidCrystal_I2C &lcd) : lcd_(lcd) {}
+  Screen(LiquidCrystal_I2C &lcd) : lcd_(lcd) {
+    l1_.reserve(CFG_LCD_COLS + 1);
+    l2_.reserve(CFG_LCD_COLS + 1);
+  }
 
   virtual void refresh() = 0;
   virtual unsigned long intervalMs() const = 0;

@@ -21,37 +21,47 @@ void WeatherScreen::refresh() {
   int code = hclient_.GET();
   if (code != HTTP_CODE_OK) {
     hclient_.end();
+    char buf[CFG_LCD_COLS + 1];
+    snprintf(buf, sizeof(buf), "HTTP %d", code);
     l1_ = "WEATHER ERR";
-    l2_ = String("HTTP ") + code;
-    Serial.println("[APP] weather " + l2_);
+    l2_ = buf;
+    Serial.print("[APP] weather ");
+    Serial.println(l2_);
     return;
   }
 
   String body = hclient_.getString();
   hclient_.end();
-  Serial.println("[APP] weather raw: " + body);
+  Serial.print("[APP] weather raw: ");
+  Serial.println(body);
 
   // HD44780 can't render the UTF-8 degree sign (0xC2 0xB0). Strip it.
   body.replace("\xC2\xB0", "");
   body.trim();
   int nl = body.indexOf('\n');
+  const char *desc = body.c_str();
+  const char *temp = "";
   if (nl >= 0) {
-    l1_ = body.substring(0, nl);
-    l2_ = body.substring(nl + 1);
-  } else {
-    l1_ = body;
-    l2_ = "";
+    body.setCharAt(nl, '\0');
+    temp = body.c_str() + nl + 1;
   }
 
   // Bake current local time and short date into the cached temperature line.
   // There is no periodic redraw, so the clock only advances on the next refetch.
   time_t epoch = timeClient_.getEpochTime();
   struct tm *t = gmtime(&epoch);
-  char suffix[13];
-  snprintf(suffix, sizeof(suffix), " %02d:%02d %02d/%02d",
-           timeClient_.getHours(), timeClient_.getMinutes(),
-           t->tm_mday, t->tm_mon + 1);
-  l2_ += suffix;
 
-  Serial.println("[APP] weather: " + l1_ + " | " + l2_);
+  char b1[CFG_LCD_COLS + 1];
+  char b2[CFG_LCD_COLS + 1];
+  snprintf(b1, sizeof(b1), "%s", desc);
+  snprintf(b2, sizeof(b2), "%s %02d:%02d %02d/%02d",
+           temp, timeClient_.getHours(), timeClient_.getMinutes(),
+           t->tm_mday, t->tm_mon + 1);
+  l1_ = b1;
+  l2_ = b2;
+
+  Serial.print("[APP] weather: ");
+  Serial.print(l1_);
+  Serial.print(" | ");
+  Serial.println(l2_);
 }
