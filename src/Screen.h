@@ -24,8 +24,10 @@ public:
       refresh();
       lastRefresh_ = millis();
     }
-    if (draw) {
+    if (draw && (immediate || l1_ != prevL1_ || l2_ != prevL2_)) {
       Display_LCD_Message(lcd_, l1_, l2_);
+      prevL1_ = l1_;
+      prevL2_ = l2_;
     }
   }
 
@@ -33,6 +35,8 @@ protected:
   Screen(LiquidCrystal_I2C &lcd) : lcd_(lcd) {
     l1_.reserve(CFG_LCD_COLS + 1);
     l2_.reserve(CFG_LCD_COLS + 1);
+    prevL1_.reserve(CFG_LCD_COLS + 1);
+    prevL2_.reserve(CFG_LCD_COLS + 1);
   }
 
   virtual void refresh() = 0;
@@ -47,4 +51,6 @@ protected:
   unsigned long lastRefresh_ = 0;
   String l1_;
   String l2_;
+  String prevL1_;
+  String prevL2_;
 };
