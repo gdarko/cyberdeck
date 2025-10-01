@@ -13,6 +13,7 @@ unsigned long WeatherScreen::intervalMs() const {
 }
 
 void WeatherScreen::refresh() {
+  timeClient_.update();
   Serial.println("[APP] weather GET " CFG_URL_WEATHER);
   hclient_.begin(wclient_, CFG_URL_WEATHER);
   // wttr.in returns the HTML browser page for browser-like UAs. A curl-style
@@ -55,7 +56,7 @@ void WeatherScreen::refresh() {
   char b2[CFG_LCD_COLS + 1];
   snprintf(b1, sizeof(b1), "%s", desc);
   snprintf(b2, sizeof(b2), "%s %02d:%02d %02d/%02d",
-           temp, timeClient_.getHours(), timeClient_.getMinutes(),
+           temp, t->tm_hour, t->tm_min,
            t->tm_mday, t->tm_mon + 1);
   l1_ = b1;
   l2_ = b2;
