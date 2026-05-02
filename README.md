@@ -70,3 +70,7 @@ First boot brings up a captive WiFi portal named `Cyberdeck Setup` (passphrase `
 
 - Add circuit sketch
 - Move to a bigger display (2.4" TFT or 2.42" OLED)
+
+# License
+
+Released into the public domain under [The Unlicense](https://unlicense.org). Do whatever you want with it. No warranty.
